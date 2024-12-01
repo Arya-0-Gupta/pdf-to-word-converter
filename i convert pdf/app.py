@@ -6,19 +6,14 @@ import time  # Simulates processing delay
 
 app = Flask(__name__)
 
-UPLOAD_FOLDER = '/tmp/uploads'  
+UPLOAD_FOLDER = "uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 tasks = {}  # To track task statuses
 
 @app.route('/')
 def home():
     return render_template("index.html")
-
-@app.route('/')
-def index():
-    return render_template('index.html')
 
 @app.route('/convert', methods=['POST'])
 def convert_pdf_to_word():
@@ -69,12 +64,6 @@ def download_file():
     if os.path.exists(file_path):
         return send_file(file_path, as_attachment=True)
     return "File not found", 404
-
-
-def handler(event, context):
-    from werkzeug.middleware.proxy_fix import ProxyFix
-    app.wsgi_app = ProxyFix(app.wsgi_app)
-    return app(event, context)
 
 if __name__ == '__main__':
     app.run()
