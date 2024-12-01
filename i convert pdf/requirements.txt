@@ -1,5 +1,4 @@
 ﻿flask
 pdf2docx
-python-docx
 werkzeug
 uuid
